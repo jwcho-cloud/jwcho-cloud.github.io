@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Jin-Woo Cho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #F4821E;
+      --red:    #7a1010;
+      --ink:    #111111;
+      --muted:  #555555;
+      --light:  #888888;
+      --border: #e5e5e5;
+      --bg:     #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 100vh;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 3rem 1.5rem 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .sidebar-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+
+    .sidebar-title {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    nav { display: flex; flex-direction: column; gap: 0.1rem; }
+
+    nav a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 0.3rem 0;
+      transition: color 0.15s;
+    }
+
+    nav a:hover { color: var(--orange); text-decoration: none; }
+    nav a.active { color: var(--ink); font-weight: 500; }
+
+    .sidebar-links {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .sidebar-links a {
+      font-size: 0.8rem;
+      color: var(--light);
+    }
+
+    .sidebar-links a:hover { color: var(--orange); }
+
+    /* ── MAIN ── */
+    main {
+      padding: 3rem 0 3rem 3rem;
+    }
+
+    section {
+      padding-bottom: 3.5rem;
+      margin-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    section h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-intro {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 1.25rem;
+      color: var(--ink);
+    }
+
+    .about-body {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 62ch;
+      margin-bottom: 1rem;
+    }
+
+    .about-body + .about-body { margin-top: 0.75rem; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.2rem 0.55rem;
+    }
+
+    /* ── NEWS ── */
+    .news-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .news-list li {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 1rem;
+      font-size: 0.875rem;
+      align-items: baseline;
+    }
+
+    .news-date {
+      font-size: 0.75rem;
+      color: var(--light);
+      white-space: nowrap;
+    }
+
+    .news-text { color: var(--ink); }
+    .news-text strong { font-weight: 600; }
+
+    /* ── RESEARCH ── */
+    .research-item {
+      margin-bottom: 2.5rem;
+    }
+
+    .research-item:last-child { margin-bottom: 0; }
+
+    .research-num {
+      font-size: 0.72rem;
+      color: var(--light);
+      margin-bottom: 0.3rem;
+    }
+
+    .research-item h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--red);
+      margin-bottom: 0.6rem;
+    }
+
+    .research-item p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      max-width: 62ch;
+      margin-bottom: 0.75rem;
+    }
+
+    .research-papers {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .research-papers span {
+      font-size: 0.78rem;
+      color: var(--light);
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--light);
+      margin-top: 2rem;
+    }
+
+    /* ── MOBILE NAV TOGGLE ── */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .mobile-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+    }
+
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding: 0.25rem 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside { display: none; }
+
+      .mobile-header { display: flex; }
+
+      main {
+        padding: 2rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <span class="mobile-name">Jin-Woo Cho</span>
+    <button class="mobile-toggle" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about">About</a>
+    <a href="#news">News</a>
+    <a href="#research">Research Highlights</a>
+    <a href="#publications">Publications</a>
+  </div>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside>
+      <p class="sidebar-name">Jin-Woo Cho</p>
+      <p class="sidebar-title">Scientist I<br>Kats Group · UW–Madison ECE</p>
+      <nav>
+        <a href="#about" class="active">About</a>
+        <a href="#news">News</a>
+        <a href="#research">Research Highlights</a>
+        <a href="#publications">Publications</a>
+      </nav>
+      <div class="sidebar-links">
+        <a href="https://katsgroup.ece.wisc.edu/" target="_blank">Kats Group</a>
+        <a href="mailto:jwcho@wisc.edu">Email</a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+      <!-- ABOUT -->
+      <section id="about">
+        <p class="about-intro">Nanophotonics &amp; infrared optical materials.</p>
+        <p class="about-body">I am a Scientist I at the University of Wisconsin–Madison in Professor Mikhail A. Kats' <a href="https://katsgroup.ece.wisc.edu/" target="_blank">research group</a>, focusing on nanophotonic structures and reconfigurable optical materials. My work spans material design, optical spectroscopy, ultrafast dynamics, electromagnetic modeling, and micro/nanofabrication to control light–matter interactions from the visible to far-infrared.</p>
+        <p class="about-body">Beyond research, I enjoy exploring local restaurants, working out, and cooking.</p>
+        <div class="tag-row">
+          <span class="tag">Infrared photonics</span>
+          <span class="tag">Phase-change materials</span>
+          <span class="tag">Radiative cooling</span>
+          <span class="tag">Nanofabrication</span>
+          <span class="tag">FTIR spectroscopy</span>
+          <span class="tag">Electromagnetic modeling</span>
+        </div>
+      </section>
+
+      <!-- NEWS -->
+      <section id="news">
+        <h2>News &amp; Updates</h2>
+        <ul class="news-list">
+          <li>
+            <span class="news-date">2026</span>
+            <span class="news-text">Received the <strong>Best Poster Award</strong> at the 2026 MRS Spring Meeting, Symposium EL07 "Plasmonics, Nanophotonics, and Metasurfaces from Design to Application."</span>
+          </li>
+          <li>
+            <span class="news-date">2026</span>
+            <span class="news-text">New research tool: <a href="#">Optical Transparency Explorer</a> is now live.</span>
+          </li>
+          <li>
+            <span class="news-date">Apr 2026</span>
+            <span class="news-text">Poster presentation at the 2026 MRS Spring Meeting, Honolulu, HI.</span>
+          </li>
+          <li>
+            <span class="news-date">Jan 2026</span>
+            <span class="news-text">This website launched.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- RESEARCH HIGHLIGHTS -->
+      <section id="research">
+        <h2>Research Highlights</h2>
+
+        <div class="research-item">
+          <p class="research-num">01</p>
+          <h3>Infrared Photonics</h3>
+          <p>I focus on designing photonic structures that interact with infrared light in a desired way. Specifically, I have been working on developing <strong>directional infrared sources</strong> that emit light with tailored directionality, <strong>passive radiative coolers</strong> that reject heat without any energy input, and <strong>tunable optical filters</strong> that use the phase transition of vanadium dioxide (VO₂) to selectively transmit or block infrared light on demand.</p>
+          <div class="research-papers">
+            <span>J.-W. Cho et al., ACS Nano 17, 10442 (2023)</span>
+            <span>J.-W. Cho et al., Nano Lett. 22, 380 (2022)</span>
+            <span>J.-W. Cho et al., Nano Lett. 21, 3974 (2021)</span>
+          </div>
+        </div>
+
+        <div class="research-item">
+          <p class="research-num">02</p>
+          <h3>Material Engineering &amp; Characterizations</h3>
+          <p>Vanadium dioxide (VO₂) is a material that can switch its optical and electrical properties depending on its temperature. This topic explores how intentionally introducing defects into VO₂ through high-energy ion irradiation can precisely control this switching behavior (including optical contrast between the two phases, transition temperature, and hysteresis width) for tunable optical devices. I have been working on developing optical filters that switch at low energy thresholds, engineering the transition temperature across a wide range from −100 to 70 °C, and studying how defect engineering affects the intrinsic switching dynamics of VO₂.</p>
+          <div class="research-papers">
+            <span>J.-W. Cho et al., in preparation</span>
+            <span>J.-W. Cho et al., in preparation</span>
+          </div>
+        </div>
+
+        <div class="research-item">
+          <p class="research-num">03</p>
+          <h3>Multifunctional Photonic Surfaces</h3>
+          <p>This topic focuses on designing optical surfaces that perform multiple functions at once. Using hollow micron-cavity structures as an optical platform, I have applied this architecture across a range of applications including light extraction in OLEDs, light absorption, and thermal emission control. By patterning surfaces into micron-scale grids, I have also built transparent electric heaters that achieve both uniform heat distribution and high optical transmittance, as well as coatings that are both antireflective and water-repellent.</p>
+          <div class="research-papers">
+            <span>S. Oh and J.-W. Cho et al., Adv. Sci. 9, 2202781 (2022)</span>
+            <span>I. Yun et al., Nano Energy 93, 106857 (2022)</span>
+          </div>
+        </div>
+
+        <div class="research-item">
+          <p class="research-num">04</p>
+          <h3>Optical Design of LED/OLED</h3>
+          <p>A large fraction of light generated inside LEDs and OLEDs is trapped due to total internal reflection. I design nanoscale optical structures such as diffraction gratings with an air void inside to maximize diffraction efficiency, enabling more efficient light extraction compared to conventional filled grating patterns.</p>
+          <div class="research-papers">
+            <span>Y.-J. Moon and J.-H. Kim et al., Opt. Exp. 26, A450 (2018)</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- PUBLICATIONS -->
+      <section id="publications">
+        <h2>Publications</h2>
+        <div class="research-item">
+          <div class="research-papers" style="gap: 0.6rem;">
+            <span style="color: var(--muted); font-style: normal;">J.-W. Cho et al., ACS Nano 17, 10442 (2023)</span>
+            <span style="color: var(--muted); font-style: normal;">J.-W. Cho et al., Nano Lett. 22, 380 (2022)</span>
+            <span style="color: var(--muted); font-style: normal;">J.-W. Cho et al., Nano Lett. 21, 3974 (2021)</span>
+            <span style="color: var(--muted); font-style: normal;">S. Oh and J.-W. Cho et al., Adv. Sci. 9, 2202781 (2022)</span>
+            <span style="color: var(--muted); font-style: normal;">I. Yun et al., Nano Energy 93, 106857 (2022)</span>
+            <span style="color: var(--muted); font-style: normal;">Y.-J. Moon and J.-H. Kim et al., Opt. Exp. 26, A450 (2018)</span>
+          </div>
+        </div>
+        <p class="footer-note">Created and operated by Jin-Woo Cho. © 2026 Jin-Woo Cho. All rights reserved.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    // Active nav highlight on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('aside nav a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+
+</body>
+</html>
