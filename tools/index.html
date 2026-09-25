@@ -73,6 +73,14 @@
     .site-nav a { font-size: 0.85rem; color: var(--muted); padding: 0.3rem 0; transition: color 0.15s; }
     .site-nav a:hover { color: var(--orange); text-decoration: none; }
     .site-nav a.active { color: var(--ink); font-weight: 500; }
+    .site-nav a.nav-sub.active { border-left-color: var(--orange); }
+
+    .nav-sub {
+      font-size: 0.78rem !important;
+      padding: 0.15rem 0 0.15rem 0.75rem !important;
+      margin-left: 0.1rem;
+      border-left: 1px solid var(--border);
+    }
 
     .sidebar-links { margin-top: auto; display: flex; flex-direction: column; gap: 0.4rem; }
     .sidebar-links a { font-size: 0.8rem; color: var(--light); }
@@ -540,6 +548,7 @@
     <a href="../#research">Research Highlights</a>
     <a href="../#publications">Publications</a>
     <a href="./" class="active">Developed Tools</a>
+    <a href="#ir-materials-explorer" class="nav-sub active">IR Materials Explorer</a>
   </div>
 
   <div class="layout">
@@ -556,6 +565,7 @@
       <a href="../#research">Research Highlights</a>
       <a href="../#publications">Publications</a>
       <a href="./" class="active">Developed Tools</a>
+      <a href="#ir-materials-explorer" class="nav-sub active">IR Materials Explorer</a>
     </nav>
     <div class="sidebar-links">
       <a href="https://katsgroup.ece.wisc.edu/" target="_blank">Kats Group</a>
@@ -568,7 +578,7 @@
 
   <main class="page">
     <p class="eyebrow">Developed Tools</p>
-    <h1>IR Materials Explorer</h1>
+    <h1 id="ir-materials-explorer">IR Materials Explorer</h1>
     <p class="lede">Compare the refractive index <i>n</i>, extinction coefficient <i>κ</i> and absorption coefficient <i>α</i> of infrared coating and window materials. Set an absorption threshold to see where each material is transparent, and hover over any curve to read its values in both plots.</p>
     <p class="cite">
       <span>Details on every material are in <strong>J.-W. Cho, T. Kumar, H. Mei, and M. A. Kats</strong>, “Material selection for mid-infrared coatings and windows” (2026).</span>
