@@ -187,6 +187,10 @@
 
     .exp-body { min-width: 0; }
 
+    /* Panels with no real photo yet stay hidden; the text spans full width. */
+    .exp-item:not(:has(.exp-photo img)) { grid-template-columns: minmax(0, 1fr); }
+    .exp-photo:not(:has(img)) { display: none; }
+
     .exp-item:last-child { margin-bottom: 0; }
 
     .exp-head {
@@ -564,7 +568,8 @@
             </div>
             <p class="exp-org">University of Wisconsin–Madison · Madison, WI</p>
             <ul>
-              <li>Optimizing adaptive thermal-regulator multilayers via genetic-algorithm inverse design.</li>
+              <li>Optimizing adaptive thermal-regulator multilayers via genetic-algorithm inverse design and fabricating them in-house.</li>
+              <li>Characterizing fabricated devices with FTIR spectroscopy, spectroscopic ellipsometry, Raman spectroscopy, and other optical techniques.</li>
               <li>Built an integrated optical–thermal balance model to predict solar photovoltaic (PV) efficiency under on-orbit conditions.</li>
             </ul>
           </div>
