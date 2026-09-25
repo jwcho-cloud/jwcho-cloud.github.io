@@ -178,8 +178,18 @@
 
     /* ── EXPERIENCE ── */
     .exp-item {
-      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 240px;
+      column-gap: 28px;
+      align-items: start;
+      margin-bottom: 2.5rem;
     }
+
+    .exp-body { min-width: 0; }
+
+    /* Panels with no real photo yet stay hidden; the text spans full width. */
+    .exp-item:not(:has(.exp-photo img)) { grid-template-columns: minmax(0, 1fr); }
+    .exp-photo:not(:has(img)) { display: none; }
 
     .exp-item:last-child { margin-bottom: 0; }
 
@@ -229,6 +239,95 @@
       position: absolute;
       left: 0;
       color: var(--light);
+    }
+
+    /* Photo panel beside each experience entry. One figure = static;
+       two or more rotate automatically with dots (see script below).
+       Swap a .slide-placeholder for <img src="images/..."> to add a photo. */
+    .exp-photo {
+      display: grid;
+      width: 240px;
+    }
+
+    .exp-photo .slide {
+      grid-row: 1;
+      grid-column: 1;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 420ms ease, visibility 420ms ease;
+    }
+
+    .exp-photo .slide.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .exp-photo .slide img,
+    .exp-photo .slide-placeholder {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: #f6f6f6;
+      border-radius: 3px;
+    }
+
+    .exp-photo .slide img { cursor: zoom-in; }
+
+    .exp-photo .slide-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eeeeee;
+      color: var(--light);
+      font-size: 0.72rem;
+    }
+
+    .exp-photo figcaption {
+      margin-top: 0.4rem;
+      font-size: 0.72rem;
+      line-height: 1.4;
+      color: var(--light);
+    }
+
+    .slide-dots {
+      grid-row: 2;
+      grid-column: 1;
+      display: flex;
+      gap: 6px;
+      margin-top: 0.5rem;
+    }
+
+    .slide-dots button {
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #d9d9d9;
+      cursor: pointer;
+    }
+
+    .slide-dots button.is-active { background: var(--orange); }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
     }
 
     .exp-subhead {
@@ -370,6 +469,13 @@
       main {
         padding: 2rem 1.25rem;
       }
+
+      .exp-item {
+        grid-template-columns: 1fr;
+        row-gap: 1rem;
+      }
+
+      .exp-photo { width: 100%; }
     }
   </style>
 </head>
@@ -455,43 +561,66 @@
         <h2>Research Experience</h2>
 
         <div class="exp-item">
-          <div class="exp-head">
-            <h3>Scientist I</h3>
-            <span class="exp-date">Oct 2026 – Present</span>
+          <div class="exp-body">
+            <div class="exp-head">
+              <h3>Scientist I</h3>
+              <span class="exp-date">Oct 2026 – Present</span>
+            </div>
+            <p class="exp-org">University of Wisconsin–Madison · Madison, WI</p>
+            <ul>
+              <li>Optimizing adaptive thermal-regulator multilayers via genetic-algorithm inverse design and fabricating them in-house.</li>
+              <li>Characterizing fabricated devices with FTIR spectroscopy, spectroscopic ellipsometry, Raman spectroscopy, and other optical techniques.</li>
+              <li>Built an integrated optical–thermal balance model to predict solar photovoltaic (PV) efficiency under on-orbit conditions.</li>
+            </ul>
           </div>
-          <p class="exp-org">University of Wisconsin–Madison · Madison, WI</p>
-          <ul>
-            <li>Optimizing adaptive thermal-regulator multilayers via genetic-algorithm inverse design.</li>
-            <li>Built an integrated optical–thermal balance model to predict solar photovoltaic (PV) efficiency under on-orbit conditions.</li>
-          </ul>
+          <div class="exp-photo" data-slideshow>
+            <figure class="slide is-active">
+              <div class="slide-placeholder">Image coming soon</div>
+            </figure>
+          </div>
         </div>
 
         <div class="exp-item">
-          <div class="exp-head">
-            <h3>Research Associate</h3>
-            <span class="exp-date">Oct 2022 – Sep 2026</span>
+          <div class="exp-body">
+            <div class="exp-head">
+              <h3>Research Associate</h3>
+              <span class="exp-date">Oct 2022 – Sep 2026</span>
+            </div>
+            <p class="exp-org">University of Wisconsin–Madison · Madison, WI</p>
+            <ul>
+              <li>Established Ar⁺ irradiation as a post-fabrication knob for tuning the vanadium dioxide (VO₂) phase transition across a 105 °C window.</li>
+              <li>Designed and fabricated VO₂-based optical coating stacks for tunable optical structures and passive radiative coolers.</li>
+              <li>Developed a high-temperature (up to 600 °C) FTIR protocol that eliminates systematic overfitting in infrared ellipsometry.</li>
+              <li>Probed the phase-transition dynamics of defect-engineered VO₂ using ultrafast pump–probe optical spectroscopy, revealing how ion-induced defects alter the switching speed.</li>
+            </ul>
           </div>
-          <p class="exp-org">University of Wisconsin–Madison · Madison, WI</p>
-          <ul>
-            <li>Established Ar⁺ irradiation as a post-fabrication knob for tuning the vanadium dioxide (VO₂) phase transition across a 105 °C window.</li>
-            <li>Designed and fabricated VO₂-based optical coating stacks for tunable optical structures and passive radiative coolers.</li>
-            <li>Developed a high-temperature (up to 600 °C) FTIR protocol that eliminates systematic overfitting in infrared ellipsometry.</li>
-          </ul>
+          <div class="exp-photo" data-slideshow>
+            <figure class="slide is-active">
+              <div class="slide-placeholder">Image coming soon</div>
+            </figure>
+          </div>
         </div>
 
         <div class="exp-item">
-          <div class="exp-head">
-            <h3>Research Assistant</h3>
-            <span class="exp-date">Sep 2016 – Sep 2022</span>
+          <div class="exp-body">
+            <div class="exp-head">
+              <h3>Research Assistant</h3>
+              <span class="exp-date">Sep 2016 – Sep 2022</span>
+            </div>
+            <p class="exp-org">Kyung Hee University · South Korea</p>
+            <ul>
+              <li>Fabricated etch-free 3D hollow microcavities by photolithography and conformal ALD.</li>
+              <li>Developed spray-coated hydrophobic antireflection coatings for solar PV cover glass, improving transmittance from 92% to 97%.</li>
+              <li>Developed and characterized high-temperature nanostructured tungsten emitters for thermophotovoltaics (TPV).</li>
+              <li>Validated PV efficiency enhancement through external quantum efficiency (EQE) analysis.</li>
+              <li>Developed flexible, heat-resistant color films based on nanometer-scale multilayer optical coatings.</li>
+            </ul>
           </div>
-          <p class="exp-org">Kyung Hee University · South Korea</p>
-          <ul>
-            <li>Fabricated etch-free 3D hollow microcavities by photolithography and conformal ALD.</li>
-            <li>Developed spray-coated hydrophobic antireflection coatings for solar PV cover glass, improving transmittance from 92% to 97%.</li>
-            <li>Developed and characterized high-temperature nanostructured tungsten emitters for thermophotovoltaics (TPV).</li>
-            <li>Validated PV efficiency enhancement through external quantum efficiency (EQE) analysis.</li>
-            <li>Developed flexible, heat-resistant color films based on nanometer-scale multilayer optical coatings.</li>
-          </ul>
+          <div class="exp-photo" data-slideshow>
+            <figure class="slide is-active">
+              <div class="slide-placeholder">Image coming soon</div>
+            </figure>
+          </div>
         </div>
 
         <h3 class="exp-subhead">Selected Research Projects</h3>
@@ -584,6 +713,8 @@
     </main>
   </div>
 
+  <div class="lightbox" id="lightbox" aria-hidden="true"><img alt="" /></div>
+
   <script>
     function toggleMobileNav() {
       document.getElementById('mobileNav').classList.toggle('open');
@@ -602,6 +733,53 @@
         a.classList.toggle('active', a.getAttribute('href') === '#' + current);
       });
     });
+
+    // Rotating photo panels (Research Experience)
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    document.querySelectorAll('[data-slideshow]').forEach(box => {
+      const slides = [...box.querySelectorAll('.slide')];
+      if (slides.length < 2) return;
+      let current = 0, timer = null, hovered = false;
+      const dots = document.createElement('div');
+      dots.className = 'slide-dots';
+      const buttons = slides.map((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Photo ' + (i + 1) + ' of ' + slides.length);
+        b.addEventListener('click', () => { show(i); restart(); });
+        dots.appendChild(b);
+        return b;
+      });
+      box.appendChild(dots);
+      function show(i) {
+        current = (i + slides.length) % slides.length;
+        slides.forEach((s, j) => s.classList.toggle('is-active', j === current));
+        buttons.forEach((b, j) => b.classList.toggle('is-active', j === current));
+      }
+      function stop() { clearInterval(timer); timer = null; }
+      function start() {
+        if (timer || hovered || reduceMotion.matches || document.hidden) return;
+        timer = setInterval(() => show(current + 1), 3000);
+      }
+      function restart() { stop(); start(); }
+      box.addEventListener('mouseenter', () => { hovered = true; stop(); });
+      box.addEventListener('mouseleave', () => { hovered = false; start(); });
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      show(0);
+      start();
+    });
+
+    // Click a photo to view it full-screen
+    const lightbox = document.getElementById('lightbox');
+    document.querySelectorAll('.exp-photo img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightbox.querySelector('img').src = img.src;
+        lightbox.querySelector('img').alt = img.alt;
+        lightbox.classList.add('open');
+      });
+    });
+    lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
   </script>
 
 </body>
