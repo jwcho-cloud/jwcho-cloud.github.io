@@ -408,6 +408,40 @@
       font-style: italic;
     }
 
+    /* ── PUBLICATIONS ── */
+    .pub-note {
+      font-size: 0.8rem;
+      color: var(--light);
+      margin: -0.75rem 0 2rem;
+    }
+
+    .pub-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pub-list li {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      line-height: 1.55;
+    }
+
+    .pub-num {
+      font-size: 0.75rem;
+      color: var(--light);
+      padding-top: 0.1rem;
+    }
+
+    .pub-body { display: flex; flex-direction: column; min-width: 0; }
+    .pub-authors { color: var(--muted); font-size: 0.8rem; }
+    .pub-authors strong { color: var(--ink); font-weight: 600; }
+    .pub-title { color: var(--ink); }
+    .pub-venue { color: var(--light); font-size: 0.8rem; font-style: italic; }
+
     /* ── FOOTER ── */
     .footer-note {
       font-size: 0.78rem;
@@ -523,7 +557,9 @@
       </nav>
       <div class="sidebar-links">
         <a href="https://katsgroup.ece.wisc.edu/" target="_blank">Kats Group</a>
-        <a href="mailto:jwcho@wisc.edu">Email</a>
+        <a href="https://scholar.google.co.kr/citations?hl=en&amp;user=yGkmIqwAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+        <a href="https://www.linkedin.com/in/jin-woo-cho-a37b18222" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:cho252@wisc.edu">Email</a>
       </div>
     </aside>
 
@@ -605,7 +641,7 @@
               <li>Established Ar⁺ irradiation as a post-fabrication knob for tuning the vanadium dioxide (VO₂) phase transition across a 105 °C window.</li>
               <li>Designed and fabricated VO₂-based optical coating stacks for tunable optical structures and passive radiative coolers.</li>
               <li>Developed a high-temperature (up to 600 °C) FTIR protocol that eliminates systematic overfitting in infrared ellipsometry.</li>
-              <li>Probed the phase-transition dynamics of defect-engineered VO₂ using ultrafast pump–probe optical spectroscopy, revealing how ion-induced defects alter the switching speed.</li>
+              <li>Probed the phase-transition dynamics of defect-engineered VO₂ using ultrafast pump–probe optical spectroscopy, showing that defect engineering does not slow its ultrafast phase transition.</li>
             </ul>
           </div>
           <div class="exp-photo" data-slideshow>
@@ -664,15 +700,15 @@
         <h3 class="exp-subhead">Education</h3>
         <ul class="project-list">
           <li>
-            <span>Ph.D., Physics (nano-optics) <span class="project-detail">Kyung Hee University, South Korea</span></span>
+            <span>Ph.D., Applied Physics <span class="project-detail">Kyung Hee University, South Korea · Advisor: Prof. Sun-Kyung Kim</span><span class="project-detail">Thesis: <a href="https://lib.khu.ac.kr/search/media/url/CAT000000588477" target="_blank" rel="noopener">Multiwavelength Design for Infrared Photonic Applications</a></span></span>
             <span class="exp-date">2022</span>
           </li>
           <li>
-            <span>M.S., Physics (nano-optics) <span class="project-detail">Kyung Hee University, South Korea</span></span>
+            <span>M.S., Applied Physics <span class="project-detail">Kyung Hee University, South Korea · Advisor: Prof. Sun-Kyung Kim</span></span>
             <span class="exp-date">2018</span>
           </li>
           <li>
-            <span>B.S., Materials Science (display materials) <span class="project-detail">Kyung Hee University, South Korea</span></span>
+            <span>B.S., Advanced Materials Engineering for Information &amp; Electronics <span class="project-detail">Kyung Hee University, South Korea · Advisor: Prof. Suk-Won Choi</span></span>
             <span class="exp-date">2016</span>
           </li>
         </ul>
@@ -680,32 +716,34 @@
         <h3 class="exp-subhead">Awards</h3>
         <ul class="project-list">
           <li>
+            <span>2025 OMEx Emerging Researcher Best Paper Prize <span class="project-sponsor">· Optica</span></span>
+            <span class="exp-date">2026</span>
+          </li>
+          <li>
             <span>Best Poster Award <span class="project-sponsor">· MRS Spring Meeting</span></span>
             <span class="exp-date">2026</span>
           </li>
           <li>
-            <span>Emerging Researcher Best Paper Prize <span class="project-sponsor">· Optical Materials Express</span></span>
-            <span class="exp-date">2025</span>
+            <span>Best Poster Presentation Award <span class="project-sponsor">· 12th International Conference on Advanced Materials and Devices (ICAMD)</span></span>
+            <span class="exp-date">2021</span>
           </li>
           <li>
-            <span>Best Poster Award <span class="project-sponsor">· MRS</span></span>
-            <span class="exp-date">2019</span>
-          </li>
-          <li>
-            <span>Best Poster Award <span class="project-sponsor">· ICAMD</span></span>
+            <span>Best Poster Award <span class="project-sponsor">· MRS Fall Meeting</span></span>
             <span class="exp-date">2019</span>
           </li>
         </ul>
 
-        <!-- Invited Talks & Seminars: uncomment and fill in when entries are ready.
         <h3 class="exp-subhead">Invited Talks &amp; Seminars</h3>
         <ul class="project-list">
           <li>
-            <span>Talk title <span class="project-sponsor">· Venue / host</span></span>
-            <span class="exp-date">Year</span>
+            <span>Invited talk: “Precise tunability of phase transition temperature in VO₂ over a range of ~100 °C for tunable optics” <span class="project-sponsor">· Yonsei University, South Korea</span></span>
+            <span class="exp-date">May 2025</span>
+          </li>
+          <li>
+            <span>Seminar for the course “Exploration of Majors and Entrepreneurship Seminar” <span class="project-sponsor">· Kyung Hee University, South Korea</span></span>
+            <span class="exp-date">May 2025</span>
           </li>
         </ul>
-        -->
       </section>
 
       <!-- RESEARCH HIGHLIGHTS -->
@@ -757,16 +795,320 @@
       <!-- PUBLICATIONS -->
       <section id="publications">
         <h2>Publications</h2>
-        <div class="research-item">
-          <div class="research-papers" style="gap: 0.6rem;">
-            <span style="color: var(--muted); font-style: normal;">J.-W. Cho et al., ACS Nano 17, 10442 (2023)</span>
-            <span style="color: var(--muted); font-style: normal;">J.-W. Cho et al., Nano Lett. 22, 380 (2022)</span>
-            <span style="color: var(--muted); font-style: normal;">J.-W. Cho et al., Nano Lett. 21, 3974 (2021)</span>
-            <span style="color: var(--muted); font-style: normal;">S. Oh and J.-W. Cho et al., Adv. Sci. 9, 2202781 (2022)</span>
-            <span style="color: var(--muted); font-style: normal;">I. Yun et al., Nano Energy 93, 106857 (2022)</span>
-            <span style="color: var(--muted); font-style: normal;">Y.-J. Moon and J.-H. Kim et al., Opt. Exp. 26, A450 (2018)</span>
-          </div>
-        </div>
+        <p class="pub-note">Peer-reviewed papers since 2020. * Equal contribution.</p>
+
+        <h3 class="exp-subhead exp-subhead-first">In preparation</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num"></span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>, Tanuj Kumar, Hongyan Mei, Mikhail A. Kats</span>
+              <span class="pub-title">“Material selection for mid-infrared coatings and windows”</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num"></span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>*, Tairan Xi*, Chenghao Wan, Shenwei Yin, Jonathan King, Tanuj Kumar, Martin Hafermann, Tae Joon Park, Hongyan Mei, Carsten Ronning, Shriram Ramanathan, Jun Xiao, Mikhail A. Kats</span>
+              <span class="pub-title">“Defect engineering of VO₂ does not affect the speed of its ultrafast phase transition”</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num"></span>
+            <span class="pub-body">
+              <span class="pub-authors">Chenghao Wan*, <strong>Jin-Woo Cho</strong>*, Martin Hafermann, Tae Joon Park, Jura Rensberg, Yuzhe Xiao, Shriram Ramanathan, Carsten Ronning, Mikhail A. Kats</span>
+              <span class="pub-title">“Enhancing tunability in fully fabricated VO₂-based photonic device via ion bombardment”</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num"></span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>, Tanuj Kumar, Yeonghoon Jin, Hongyan Mei, Jonathan King, Mikhail A. Kats</span>
+              <span class="pub-title">“Bandwidth-tunable vanadium dioxide-based thermal emitter for infrared Morse communications”</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">2026</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num"></span>
+            <span class="pub-body">
+              <span class="pub-authors">Hongyan Mei*, <strong>Jin-Woo Cho</strong>*, Jae-Seon Yu, Huandong Chen, Shantanu Singh, Boyang Zhao, Jayakanth Ravichandran, Sun-Kyung Kim, Mikhail A. Kats</span>
+              <span class="pub-title">“Anti-reflection coatings for highly anisotropic materials in the mid infrared”</span>
+              <span class="pub-venue">arXiv:2601.00558 (2026) · in revision, Nanophotonics</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[35]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Furkan Kuruoglu, Samir Rosas, <strong>Jin-Woo Cho</strong>, David A. Czaplewski, Yuri Kivshar, Mikhail A. Kats, Filiz Yesilkoy</span>
+              <span class="pub-title">“Dynamically tunable membrane metasurfaces for infrared spectroscopy”</span>
+              <span class="pub-venue">Light: Sci. Appl. (2026)</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">2025</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num">[34]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>, Jonathan L. King, Martin Hafermann, Karla Paz, Shenwei Yin, Tanuj Kumar, Hongyan Mei, Joseph A. Andrade, Dung T. Quach, Colin Hessel, Chenghao Wan, Carsten Ronning, David Woolf, Mikhail A. Kats</span>
+              <span class="pub-title">“Precise control of the phase-transition temperature of VO₂ from 70 to −35 °C for tunable optics”</span>
+              <span class="pub-venue">arXiv:2506.08223 (2025)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[33]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Geon-Tae Park, <strong>Jin-Woo Cho</strong>, Hyung Rae Kim, Qiaoqiang Gan, Young Min Song, Sun-Kyung Kim</span>
+              <span class="pub-title">“Microstructured optical coatings for climate crisis mitigation”</span>
+              <span class="pub-venue">Appl. Phys. Rev. 12, 031332 (2025)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[32]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Yeonghoon Jin, <strong>Jin-Woo Cho</strong>, Mikhail A. Kats</span>
+              <span class="pub-title">“Passive radiative cooling using temperature-dependent emissivity can sometimes outperform static emitters”</span>
+              <span class="pub-venue">APL Photonics 10, 110806 (2025)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[31]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Shenwei Yin*, <strong>Jin-Woo Cho</strong>*, Demeng Feng, Hongyan Mei, Tanuj Kumar, Chenghao Wan, Yeonghoon Jin, Minjeong Kim, Mikhail A. Kats</span>
+              <span class="pub-title">“Preventing overfitting in infrared ellipsometry using temperature dependence: fused silica as a case study”</span>
+              <span class="pub-venue">Opt. Mater. Express 15, 1939 (2025)</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">2024</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num">[30]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Young-Bin Kim, <strong>Jin-Woo Cho</strong>, Dukkyu Bae, Sun-Kyung Kim</span>
+              <span class="pub-title">“Single-unit metalens integrated micro light-emitting diodes”</span>
+              <span class="pub-venue">Curr. Appl. Phys. 67, 85 (2024)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[29]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Jae-Seon Yu, Serang Jung, <strong>Jin-Woo Cho</strong>, Geon-Tae Park, Mikhail A. Kats, Sun-Kyung Kim, Eungkyu Lee</span>
+              <span class="pub-title">“Ultrathin Ge-YF₃ antireflective coating with 0.5% reflectivity on high-index substrate for long-wavelength infrared cameras”</span>
+              <span class="pub-venue">Nanophotonics 13, 4067 (2024)</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">2023</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num">[28]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>, Yun-Jo Lee, Jae-Hyun Kim, Run Hu, Eungkyu Lee, Sun-Kyung Kim</span>
+              <span class="pub-title">“Directional radiative cooling via exceptional epsilon-based microcavities”</span>
+              <span class="pub-venue">ACS Nano 17, 10442 (2023)</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">2022</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num">[27]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Jae-Hyun Kim*, <strong>Jin-Woo Cho</strong>*, Injun Jeon, Kyung Taek Jeong, Hyuk-Jun Kang, Dae-Geun Choi, Jae Hyun Kim, Sun-Kyung Kim</span>
+              <span class="pub-title">“Synergistically designed antireflective cover for improving wide-angle photovoltaic efficiencies”</span>
+              <span class="pub-venue">Opt. Express 30, 42406 (2022)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[26]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Young-Bin Kim*, <strong>Jin-Woo Cho</strong>*, Yun-Jo Lee, Dukkyu Bae, Sun-Kyung Kim</span>
+              <span class="pub-title">“High-index-contrast photonic structures: a versatile platform for photon manipulation”</span>
+              <span class="pub-venue">Light: Sci. Appl. 11, 316 (2022)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[25]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Seungtae Oh*, <strong>Jin-Woo Cho</strong>*, Jihun Lee, Jeonghoon Han, Sun-Kyung Kim, Youngsuk Nam</span>
+              <span class="pub-title">“A scalable haze-free anti-reflection hierarchical surface with self-cleaning capability”</span>
+              <span class="pub-venue">Adv. Sci. 9, 2202781 (2022)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[24]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>*, Sangsoon Yoon*, Eun-Joo Lee, Sun-Kyung Kim</span>
+              <span class="pub-title">“Anti-greenhouse effect via regulation of surface emissivity”</span>
+              <span class="pub-venue">IEEE Photonics J. 14, 0616107 (2022)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[23]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>, Eun-Joo Lee, Sun-Kyung Kim</span>
+              <span class="pub-title">“Radiative cooling technologies: a platform for passive heat dissipation”</span>
+              <span class="pub-venue">J. Korean Phys. Soc. 81, 481 (2022)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[22]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>*, Eun-Joo Lee*, Sun-Kyung Kim</span>
+              <span class="pub-title">“Full-color solar heat resistant films based on nanometer optical coatings”</span>
+              <span class="pub-venue">Nano Lett. 22, 380 (2022)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[21]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Insik Yun, Yeonghee Lee, Young-Geun Park, Hunkyu Seo, Won Gi Chung, Soo-Jin Park, <strong>Jin-Woo Cho</strong>, Jun Hyeok Lee, Ravi Prakash Srivastava, Rira Kang, Byunghong Lee, Dahl-Young Khang, Sun-Kyung Kim, Jun Hong Noh, Jang-Ung Park</span>
+              <span class="pub-title">“Transferable transparent electrodes of liquid metals for bifacial perovskite solar cells and heaters”</span>
+              <span class="pub-venue">Nano Energy 93, 106857 (2022)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[20]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Tae-Seop Song, <strong>Jin-Woo Cho</strong>, Jong-Ho Kim, Su-Kyung Kim, Sun-Kyung Kim, Tae-Yeon Seong</span>
+              <span class="pub-title">“High ultraviolet transparent conducting electrodes formed using tantalum oxide/Ag multilayers”</span>
+              <span class="pub-venue">Ceram. Int. 48, 3536 (2022)</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">2021</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num">[19]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Eun-Joo Lee*, <strong>Jin-Woo Cho</strong>*, Young-Seok Kim, Sun-Kyung Kim</span>
+              <span class="pub-title">“Nanometer optical coating based visibly tinted films with 24-h sub-atmospheric passive cooling”</span>
+              <span class="pub-venue">Opt. Lett. 46, 5043 (2021)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[18]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Seungtae Oh*, <strong>Jin-Woo Cho</strong>*, Dasol Jeong, Kyungjun Lee, Eun-Joo Lee, Seongjong Shin, Sun-Kyung Kim, Youngsuk Nam</span>
+              <span class="pub-title">“High-temperature carbonized ceria thermophotovoltaic emitter beyond tungsten”</span>
+              <span class="pub-venue">ACS Appl. Mater. Interfaces 13, 42724 (2021)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[17]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>*, Sung-Jun Park*, Su-Jin Park, Young-Bin Kim, Yoon-Jong Moon, Sun-Kyung Kim</span>
+              <span class="pub-title">“Cooling metals via gap plasmon resonance”</span>
+              <span class="pub-venue">Nano Lett. 21, 3974 (2021)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[16]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Young-Bin Kim, <strong>Jin-Woo Cho</strong>, Yoon-Jong Moon, Dukkyu Bae, Sun-Kyung Kim</span>
+              <span class="pub-title">“Hexagonally connected submicron hollow veins for high efficiency, narrow beam organic emitters”</span>
+              <span class="pub-venue">Photonics Nanostructures: Fundam. Appl. 43, 100902 (2021)</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">2020</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num">[15]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>, Sung-Jun Park, Su-Jin Park, Young-Bin Kim, Ka-Youn Kim, Dukkyu Bae, Sun-Kyung Kim</span>
+              <span class="pub-title">“Scalable on-chip radiative coolers for concentrated solar energy devices”</span>
+              <span class="pub-venue">ACS Photonics 7, 2748 (2020)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[14]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Jong-Ho Kim, <strong>Jin-Woo Cho</strong>, Su-Kyung Kim, Jae-Ho Kim, Sun-Kyung Kim, Tae-Yeon Seong</span>
+              <span class="pub-title">“Forming high transmittance GaSnO/Ag/GaSnO conducting electrodes for optoelectronic devices”</span>
+              <span class="pub-venue">Ceram. Int. 46, 28165 (2020)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[13]</span>
+            <span class="pub-body">
+              <span class="pub-authors"><strong>Jin-Woo Cho</strong>, Soo-Kyung Chang, Sung-Jun Park, Seungtae Oh, Youngsuk Nam, Sun-Kyung Kim</span>
+              <span class="pub-title">“Switching of heating and cooling modes using thermal radiation films”</span>
+              <span class="pub-venue">Curr. Appl. Phys. 20, 1073 (2020)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[12]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Su-Kyung Kim, <strong>Jin-Woo Cho</strong>, Hyeong-Seop Im, Won-Chul Lim, Sun-Kyung Kim, Tae-Yeon Seong</span>
+              <span class="pub-title">“Formation of high ultraviolet transparent SrVOx/Ag-based conducting electrode”</span>
+              <span class="pub-venue">Ceram. Int. 46, 19484 (2020)</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">[11]</span>
+            <span class="pub-body">
+              <span class="pub-authors">Sung-Jun Park, Young-Bin Kim, Yoon-Jong Moon, <strong>Jin-Woo Cho</strong>, Sun-Kyung Kim</span>
+              <span class="pub-title">“Tuning of polarized room-temperature thermal radiation based on nanogap plasmon resonance”</span>
+              <span class="pub-venue">Opt. Express 28, 15472 (2020)</span>
+            </span>
+          </li>
+        </ol>
+
+        <h3 class="exp-subhead">Patents</h3>
+        <ol class="pub-list">
+          <li>
+            <span class="pub-num">P1</span>
+            <span class="pub-body">
+              <span class="pub-authors">Dukkyu Bae, Sunghee Kim, Ka-Youn Kim, Sun-Kyung Kim, <strong>Jin-Woo Cho</strong></span>
+              <span class="pub-title">“Thermal radiation body for cooling heating element and method for manufacturing the same”</span>
+              <span class="pub-venue">US Patent Application No. 16/457,899</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">P2</span>
+            <span class="pub-body">
+              <span class="pub-authors">Dukkyu Bae, Sunghee Kim, Ka-Youn Kim, Sun-Kyung Kim, <strong>Jin-Woo Cho</strong></span>
+              <span class="pub-title">“Thermal radiation body for cooling heating element and method for manufacturing the same”</span>
+              <span class="pub-venue">KR Patent No. 10-220417</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">P3</span>
+            <span class="pub-body">
+              <span class="pub-authors">Sun-Kyung Kim, Yoon-Jung Shin, <strong>Jin-Woo Cho</strong></span>
+              <span class="pub-title">“Multilayered radiant cooling structure”</span>
+              <span class="pub-venue">KR Patent No. 10-2036071</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">P4</span>
+            <span class="pub-body">
+              <span class="pub-authors">Sun-Kyung Kim, <strong>Jin-Woo Cho</strong></span>
+              <span class="pub-title">“Radiant cooling structure including cavity pattern and forming method thereof”</span>
+              <span class="pub-venue">KR Patent No. 10-2036069</span>
+            </span>
+          </li>
+          <li>
+            <span class="pub-num">P5</span>
+            <span class="pub-body">
+              <span class="pub-authors">Sun-Kyung Kim, <strong>Jin-Woo Cho</strong></span>
+              <span class="pub-title">“Omnidirectional dielectric mirror”</span>
+              <span class="pub-venue">KR Patent No. 10-1913961</span>
+            </span>
+          </li>
+        </ol>
+
         <p class="footer-note">Created and operated by Jin-Woo Cho. © 2026 Jin-Woo Cho. All rights reserved.</p>
       </section>
 
