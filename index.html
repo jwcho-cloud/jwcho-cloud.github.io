@@ -47,11 +47,21 @@
       position: sticky;
       top: 0;
       height: 100vh;
+      overflow-y: auto;
       padding: 3rem 1.5rem 2rem 0;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
       border-right: 1px solid var(--border);
+    }
+
+    .profile-photo {
+      display: block;
+      width: 132px;
+      aspect-ratio: 199 / 285;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 1rem;
     }
 
     .sidebar-name {
@@ -462,6 +472,20 @@
       align-items: center;
     }
 
+    .mobile-id {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .mobile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 30%;
+    }
+
     .mobile-name {
       font-size: 0.95rem;
       font-weight: 600;
@@ -529,7 +553,10 @@
 
   <!-- MOBILE HEADER -->
   <div class="mobile-header">
-    <span class="mobile-name">Jin-Woo Cho</span>
+    <span class="mobile-id">
+      <img class="mobile-avatar" src="images/profile.png" alt="" />
+      <span class="mobile-name">Jin-Woo Cho</span>
+    </span>
     <button class="mobile-toggle" onclick="toggleMobileNav()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -546,6 +573,7 @@
 
     <!-- SIDEBAR -->
     <aside>
+      <img class="profile-photo" src="images/profile.png" alt="Jin-Woo Cho" />
       <p class="sidebar-name">Jin-Woo Cho</p>
       <p class="sidebar-title">Scientist I<br>Kats Group · UW–Madison ECE</p>
       <nav>
