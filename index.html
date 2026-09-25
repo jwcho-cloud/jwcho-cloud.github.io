@@ -331,10 +331,22 @@
     }
 
     .exp-subhead {
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      color: var(--ink);
-      margin: 2.5rem 0 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--light);
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+      margin: 3rem 0 1.25rem;
+    }
+
+    .exp-subhead-first { margin-top: 0; }
+
+    .project-detail {
+      display: block;
+      color: var(--light);
+      font-size: 0.8rem;
     }
 
     .project-list {
@@ -491,7 +503,7 @@
   <div class="mobile-nav" id="mobileNav">
     <a href="#about">About</a>
     <a href="#news">News</a>
-    <a href="#experience">Research Experience</a>
+    <a href="#experience">Experience</a>
     <a href="#research">Research Highlights</a>
     <a href="#publications">Publications</a>
   </div>
@@ -505,7 +517,7 @@
       <nav>
         <a href="#about" class="active">About</a>
         <a href="#news">News</a>
-        <a href="#experience">Research Experience</a>
+        <a href="#experience">Experience</a>
         <a href="#research">Research Highlights</a>
         <a href="#publications">Publications</a>
       </nav>
@@ -558,7 +570,9 @@
 
       <!-- RESEARCH EXPERIENCE -->
       <section id="experience">
-        <h2>Research Experience</h2>
+        <h2>Experience</h2>
+
+        <h3 class="exp-subhead exp-subhead-first">Research Experience</h3>
 
         <div class="exp-item">
           <div class="exp-body">
@@ -646,6 +660,52 @@
             <span class="exp-date">2017 – 2020</span>
           </li>
         </ul>
+
+        <h3 class="exp-subhead">Education</h3>
+        <ul class="project-list">
+          <li>
+            <span>Ph.D., Physics (nano-optics) <span class="project-detail">Kyung Hee University, South Korea</span></span>
+            <span class="exp-date">2022</span>
+          </li>
+          <li>
+            <span>M.S., Physics (nano-optics) <span class="project-detail">Kyung Hee University, South Korea</span></span>
+            <span class="exp-date">2018</span>
+          </li>
+          <li>
+            <span>B.S., Materials Science (display materials) <span class="project-detail">Kyung Hee University, South Korea</span></span>
+            <span class="exp-date">2016</span>
+          </li>
+        </ul>
+
+        <h3 class="exp-subhead">Awards</h3>
+        <ul class="project-list">
+          <li>
+            <span>Best Poster Award <span class="project-sponsor">· MRS Spring Meeting</span></span>
+            <span class="exp-date">2026</span>
+          </li>
+          <li>
+            <span>Emerging Researcher Best Paper Prize <span class="project-sponsor">· Optical Materials Express</span></span>
+            <span class="exp-date">2025</span>
+          </li>
+          <li>
+            <span>Best Poster Award <span class="project-sponsor">· MRS</span></span>
+            <span class="exp-date">2019</span>
+          </li>
+          <li>
+            <span>Best Poster Award <span class="project-sponsor">· ICAMD</span></span>
+            <span class="exp-date">2019</span>
+          </li>
+        </ul>
+
+        <!-- Invited Talks & Seminars: uncomment and fill in when entries are ready.
+        <h3 class="exp-subhead">Invited Talks &amp; Seminars</h3>
+        <ul class="project-list">
+          <li>
+            <span>Talk title <span class="project-sponsor">· Venue / host</span></span>
+            <span class="exp-date">Year</span>
+          </li>
+        </ul>
+        -->
       </section>
 
       <!-- RESEARCH HIGHLIGHTS -->
