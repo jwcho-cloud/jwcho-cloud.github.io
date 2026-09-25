@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>IR Materials Explorer · Jin-Woo Cho</title>
+  <meta name="description" content="Interactive refractive index, extinction coefficient and absorption coefficient of infrared coating and window materials." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #F4821E;
+      --orange-soft: #fef3e8;
+      --red:    #7a1010;
+      --ink:    #111111;
+      --muted:  #555555;
+      --light:  #888888;
+      --border: #e5e5e5;
+      --panel:  #fafafa;
+      --bg:     #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    button, input { font: inherit; color: inherit; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .home-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    .home-link:hover { text-decoration: none; color: var(--orange); }
+
+    .home-link img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 30%;
+    }
+
+    .topnav {
+      display: flex;
+      gap: 1.25rem;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .topnav a { font-size: 0.82rem; color: var(--muted); }
+    .topnav a:hover { color: var(--orange); text-decoration: none; }
+    .topnav a.active { color: var(--ink); font-weight: 600; }
+
+    /* ── PAGE HEADER ── */
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+
+    .lede {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 75ch;
+    }
+
+    .cite {
+      margin-top: 1rem;
+      display: inline-flex;
+      gap: 0.6rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--orange-soft);
+      border-left: 3px solid var(--orange);
+      border-radius: 0 4px 4px 0;
+      padding: 0.55rem 0.9rem;
+    }
+
+    .cite strong { color: var(--ink); font-weight: 600; }
+
+    /* ── APP LAYOUT ── */
+    .app {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .panel {
+      position: sticky;
+      top: 72px;
+      max-height: calc(100vh - 88px);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .panel-toggle { display: none; }
+
+    .panel-body {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      flex: 1;
+    }
+
+    .ctrl {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ctrl-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+
+    .ctrl-label em { font-style: normal; text-transform: none; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .field {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--bg);
+      transition: border-color 0.15s;
+    }
+
+    .field:focus-within { border-color: var(--orange); }
+
+    .field span {
+      font-size: 0.72rem;
+      color: var(--light);
+      padding: 0 0.45rem;
+      white-space: nowrap;
+    }
+
+    .field input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.45rem 0.35rem 0;
+      text-align: right;
+      outline: none;
+    }
+
+    .chips {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+    }
+
+    .chip {
+      flex: 1;
+      font-size: 0.72rem;
+      padding: 0.2rem 0;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg);
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .chip:hover { border-color: var(--orange); color: var(--orange); }
+    .chip.on { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+    .bulk {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bulk button {
+      flex: 1;
+      font-size: 0.75rem;
+      padding: 0.3rem 0;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--bg);
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .bulk button:hover { border-color: var(--ink); color: var(--ink); }
+
+    .groups {
+      overflow-y: auto;
+      padding: 0.4rem 0 0.8rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .group-head {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem 0.2rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .group-head input { accent-color: var(--orange); cursor: pointer; }
+
+    .group-head button {
+      margin-left: auto;
+      border: 0;
+      background: none;
+      color: var(--light);
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .mat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.22rem 1rem 0.22rem 1.6rem;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 0;
+      transition: background 0.12s;
+    }
+
+    .mat:hover { background: var(--panel); }
+
+    .mat .sw {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      border: 1.5px solid transparent;
+    }
+
+    .mat.off .sw { background: transparent !important; }
+
+    .mat .nm { font-size: 0.8rem; color: var(--ink); }
+    .mat.off .nm { color: #bbb; }
+
+    .mat .dl {
+      margin-left: auto;
+      border: 0;
+      background: none;
+      color: #c4c4c4;
+      cursor: pointer;
+      padding: 0 0.1rem;
+      display: flex;
+      opacity: 0;
+      transition: opacity 0.12s, color 0.12s;
+    }
+
+    .mat:hover .dl { opacity: 1; }
+    .mat .dl:hover { color: var(--orange); }
+
+    .mat-wrap.closed { display: none; }
+
+    /* ── PLOTS ── */
+    .plots {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .toolbar .status { margin-left: auto; color: var(--light); }
+
+    .seg {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px;
+      background: var(--panel);
+    }
+
+    .seg button {
+      border: 0;
+      background: none;
+      font-size: 0.74rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 4px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .seg button.on {
+      background: var(--bg);
+      color: var(--ink);
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
+    .plot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .card-title { font-size: 0.92rem; font-weight: 600; }
+    .card-sub { font-size: 0.74rem; color: var(--light); }
+
+    .card-tools {
+      margin-left: auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .plot-wrap {
+      position: relative;
+      height: 460px;
+      padding: 0 0.5rem 0.5rem;
+    }
+
+    .plot-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    .empty {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .tt {
+      position: fixed;
+      z-index: 60;
+      pointer-events: none;
+      display: none;
+      min-width: 170px;
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .tt-name {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .tt-name i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+    .tt-row { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); }
+    .tt-row b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+    .tt-row.win b { color: #1f7a3a; }
+    .tt-row.nowin b { color: var(--red); }
+
+    .foot {
+      font-size: 0.75rem;
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    .foot p + p { margin-top: 0.3rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1180px) {
+      .plot-grid { grid-template-columns: 1fr; }
+      .plot-wrap { height: 400px; }
+    }
+
+    @media (max-width: 820px) {
+      .topnav { display: none; }
+      .page { padding: 1.75rem 1rem 3rem; }
+      h1 { font-size: 1.45rem; }
+      .app { grid-template-columns: 1fr; }
+      .panel { position: static; max-height: none; }
+      .panel-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border: 0;
+        background: var(--panel);
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .panel:not(.open) .panel-body { display: none; }
+      .groups { max-height: 360px; }
+      .plot-wrap { height: 340px; padding: 0 0.25rem 0.25rem; }
+      .mat .dl { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="home-link" href="../">
+        <img src="../images/profile.png" alt="" />
+        Jin-Woo Cho
+      </a>
+      <nav class="topnav">
+        <a href="../#about">About</a>
+        <a href="../#news">News</a>
+        <a href="../#experience">Experience</a>
+        <a href="../#research">Research Highlights</a>
+        <a href="../#publications">Publications</a>
+        <a href="./" class="active">Developed Tools</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <p class="eyebrow">Developed Tools</p>
+    <h1>IR Materials Explorer</h1>
+    <p class="lede">Compare the refractive index <i>n</i>, extinction coefficient <i>κ</i> and absorption coefficient <i>α</i> of infrared coating and window materials. Set an absorption threshold to see where each material is transparent, and hover over any curve to read its values in both plots.</p>
+    <p class="cite">
+      <span>Details on every material are in <strong>J.-W. Cho, T. Kumar, H. Mei, and M. A. Kats</strong>, “Material selection for mid-infrared coatings and windows” (2026).</span>
+      <a href="https://arxiv.org/abs/2605.29079" target="_blank" rel="noopener">arXiv:2605.29079 →</a>
+    </p>
+
+    <section class="app">
+      <aside class="panel" id="panel">
+        <button class="panel-toggle" type="button" id="panel-toggle" aria-expanded="false">
+          <span>Materials &amp; settings</span><span id="panel-caret">▾</span>
+        </button>
+        <div class="panel-body">
+          <div class="ctrl">
+            <div class="ctrl-label"><span>Transparency threshold</span></div>
+            <div class="field"><span>α &lt;</span><input type="number" id="at" value="10" min="0.001" step="any" /><span>cm⁻¹</span></div>
+            <div class="chips" id="at-chips">
+              <button type="button" class="chip" data-v="1">1</button>
+              <button type="button" class="chip on" data-v="10">10</button>
+              <button type="button" class="chip" data-v="100">100</button>
+              <button type="button" class="chip" data-v="1000">1000</button>
+            </div>
+          </div>
+          <div class="ctrl">
+            <div class="ctrl-label"><span>Wavelength <em>(μm)</em></span></div>
+            <div class="field-row">
+              <div class="field"><span>min</span><input type="number" id="lmin" value="0.2" min="0.01" step="any" /></div>
+              <div class="field"><span>max</span><input type="number" id="lmax" value="25" min="0.1" step="any" /></div>
+            </div>
+          </div>
+          <div class="ctrl">
+            <div class="ctrl-label"><span>Refractive index <em>n</em></span></div>
+            <div class="field-row">
+              <div class="field"><span>min</span><input type="number" id="nmin" placeholder="auto" step="any" /></div>
+              <div class="field"><span>max</span><input type="number" id="nmax" placeholder="auto" step="any" /></div>
+            </div>
+          </div>
+          <div class="bulk">
+            <button type="button" id="all-on">Select all</button>
+            <button type="button" id="all-off">Clear</button>
+          </div>
+          <div class="groups" id="groups"></div>
+        </div>
+      </aside>
+
+      <div class="plots">
+        <div class="toolbar">
+          <span>Wavelength axis</span>
+          <div class="seg" id="xscale">
+            <button type="button" class="on" data-v="linear">Linear</button>
+            <button type="button" data-v="log">Log</button>
+          </div>
+          <span class="status" id="status"></span>
+        </div>
+
+        <div class="plot-grid">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <p class="card-title">Refractive index <i>n</i></p>
+                <p class="card-sub" id="n-sub">Transparency window only</p>
+              </div>
+              <div class="card-tools">
+                <div class="seg" id="nscale">
+                  <button type="button" class="on" data-v="linear">Lin</button>
+                  <button type="button" data-v="log">Log</button>
+                </div>
+              </div>
+            </div>
+            <div class="plot-wrap">
+              <svg id="plot-n" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Refractive index versus wavelength"></svg>
+              <div class="empty" id="empty-n">No materials selected</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <p class="card-title" id="a-title">Absorption coefficient <i>α</i></p>
+                <p class="card-sub" id="a-sub">Bold: inside the transparency window</p>
+              </div>
+              <div class="card-tools">
+                <div class="seg" id="aqty">
+                  <button type="button" class="on" data-v="alpha">α</button>
+                  <button type="button" data-v="kappa">κ</button>
+                </div>
+                <div class="seg" id="ascale">
+                  <button type="button" data-v="linear">Lin</button>
+                  <button type="button" class="on" data-v="log">Log</button>
+                </div>
+              </div>
+            </div>
+            <div class="plot-wrap">
+              <svg id="plot-a" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Absorption versus wavelength"></svg>
+              <div class="empty" id="empty-a">No materials selected</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="foot">
+          <p>α = 4πκ/λ. The transparency window is where α is below the threshold. Dashed line: the threshold (in the κ view it becomes κ = αλ/4π, so it rises with wavelength).</p>
+          <p>Where a source reports κ = 0, that point cannot be drawn on a log axis. Hover over a material in the list and click the download icon to get its n, k data as CSV.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="tt" id="tt"></div>
+
+  <script src="ir-materials-data.js"></script>
+  <script>
+/* ── Helpers kept from the original explorer ── */
+function downloadMat(key){
+  const m=MAT[key];
+  if(!m||!m.d)return;
+  // Source에서 저자_저널_연도 추출
+  let refTag='ref';
+  const src = m.source || (m.sources&&m.sources[0]&&m.sources[0].ref) || '';
+  const authorMatch = src.match(/^([A-Z][a-zA-Z\-]+)/);
+  const yearMatch = src.match(/\((\d{4})\)/);
+  /* Journal 축약: 쉼표 뒤 첫 부분에서 단어 2-3개 추출 */
+  let journalTag = '';
+  const journalMatch = src.match(/,\s*([A-Z][A-Za-z\.\s&]+?)(?:\s+\d|,|;)/);
+  if(journalMatch){
+    journalTag = journalMatch[1].trim()
+      .replace(/Handbook of Optical Constants of Solids/i,'HOCS')
+      .replace(/\./g,'')
+      .replace(/\s+/g,'')
+      .slice(0,25);
+  } else if(src.includes('arXiv')){
+    journalTag = 'arXiv';
+  }
+  const parts = [];
+  if(authorMatch) parts.push(authorMatch[1]);
+  if(journalTag) parts.push(journalTag);
+  if(yearMatch) parts.push(yearMatch[1]);
+  if(parts.length) refTag = parts.join('_');
+  
+  const showN=m.show_n_lams, showK=m.show_k_lams;
+  const nameClean = m.name.replace(/[^\w\-]/g,'_');
+
+  /* === Build CSV header comments === */
+  // helpers to split a ref string into citation text and DOI
+  const extractDoi = (s) => {
+    if(!s) return null;
+    const mm = s.match(/doi:\s*(\S+)/i);
+    return mm ? mm[1].replace(/[.,;]+$/,'') : null;
+  };
+  const stripDoi = (s) => {
+    if(!s) return s;
+    return s.replace(/[;,]?\s*doi:\s*\S+\s*$/i,'').trim();
+  };
+  // Unicode subscripts/superscripts → ASCII digits (avoids encoding issues in Excel/viewers)
+  const asciify = (s) => {
+    if(!s) return s;
+    const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+    const supMap = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'};
+    return s.replace(/[₀-₉]/g, c => subMap[c]).replace(/[⁰-⁹]/g, c => supMap[c]);
+  };
+
+  let hdr = '';
+  hdr += `# Material: ${asciify(m.name)}\n`;
+  if(m.sources && m.sources.length){
+    m.sources.forEach((s,i)=>{
+      const refText = asciify(stripDoi(s.ref));
+      const doi = extractDoi(s.ref);
+      const rangeTag = (s.lmin && s.lmax) ? ` (${s.lmin}-${s.lmax} um)` : '';
+      hdr += `# Source ${i+1}${rangeTag}: ${refText}\n`;
+      hdr += `# DOI ${i+1}: ${doi || 'N/A'}\n`;
+    });
+  } else {
+    const refText = asciify(stripDoi(m.source));
+    const doi = extractDoi(m.source);
+    hdr += `# Source: ${refText || 'N/A'}\n`;
+    hdr += `# DOI: ${doi || 'N/A'}\n`;
+  }
+  hdr += `# Crystallinity: ${m.cryst || 'N/A'}\n`;
+  hdr += `# Temperature: ${m.temp || 'N/A'}\n`;
+
+  let csv = hdr + 'wl_um,n,k\n';
+  m.d.forEach(p=>{
+    const nShow = !showN || showN.has(p.l);
+    const kShow = !showK || showK.has(p.l);
+    if(!nShow && !kShow) return;
+    csv += `${p.l},${nShow?p.n:''},${kShow?p.k:''}\n`;
+  });
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`${nameClean}_${refTag}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function niceTicks(vmin,vmax,count=6){
+  if(vmax<=vmin)return[vmin,vmax];
+  const r=vmax-vmin;
+  /* 항상 0.5 또는 1 단위로 tick 생성 */
+  let step=1;
+  if(r<=4) step=0.5;
+  else if(r<=10) step=1;
+  else if(r<=20) step=2;
+  else if(r<=50) step=5;
+  else step=10;
+  const t=[];
+  for(let v=Math.ceil(vmin/step)*step; v<=vmax*1.001; v=parseFloat((v+step).toFixed(10))){
+    if(v>=vmin-step*0.001) t.push(parseFloat(v.toFixed(10)));
+  }
+  return t;
+}
+function niceLogTicks(vmin,vmax,minCount=5){
+  if(vmin<=0)vmin=1e-10;
+  const e0=Math.floor(Math.log10(vmin)), e1=Math.ceil(Math.log10(vmax));
+  /* 우선 10의 거듭제곱 tick 수집 */
+  let t=[];
+  for(let e=e0;e<=e1;e++){
+    const v=Math.pow(10,e);
+    if(v>=vmin*0.99 && v<=vmax*1.01) t.push(v);
+  }
+  /* tick이 충분하지 않으면 sub-decade 추가 */
+  if(t.length<minCount){
+    const subdiv=[1,2,3,5,7];
+    let candidates=[];
+    for(let e=e0;e<=e1;e++){
+      subdiv.forEach(s=>{
+        const v=s*Math.pow(10,e);
+        if(v>=vmin*0.99 && v<=vmax*1.01) candidates.push(v);
+      });
+    }
+    candidates = candidates.filter((v,i,a)=>a.indexOf(v)===i).sort((a,b)=>a-b);
+    if(candidates.length>=minCount) t = candidates;
+    /* 여전히 부족하면 더 촘촘히 */
+    if(t.length<minCount){
+      const subFiner=[1,1.5,2,2.5,3,4,5,6,7,8];
+      candidates=[];
+      for(let e=e0;e<=e1;e++){
+        subFiner.forEach(s=>{
+          const v=s*Math.pow(10,e);
+          if(v>=vmin*0.99 && v<=vmax*1.01) candidates.push(v);
+        });
+      }
+      candidates = candidates.filter((v,i,a)=>a.indexOf(v)===i).sort((a,b)=>a-b);
+      if(candidates.length>=minCount) t = candidates;
+    }
+  }
+  return t.filter((v,i)=>i===0 || Math.abs(v-t[i-1])/v>0.01);
+}
+function fmtV(v){
+  if(v===0)return'0';
+  const a=Math.abs(v);
+  if(a>=0.1&&a<1000)return String(parseFloat(v.toPrecision(3)));
+  const e=Math.floor(Math.log10(a));
+  const m=v/Math.pow(10,e);
+  const sup=n=>String(n).split('').map(c=>({'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'}[c]||c)).join('');
+  return(Math.abs(m-1)<0.01?'':parseFloat(m.toFixed(1))+'×')+'10'+sup(e);
+}
+
+
+/* ── State ── */
+const state = {
+  xScale: 'linear', nScale: 'linear', aScale: 'log', aQty: 'alpha',
+  checked: {}, focus: null,
+};
+const NS = 'http://www.w3.org/2000/svg';
+const FONT = "Inter, Helvetica, Arial, sans-serif";
+
+function aCm(l, k) { return (4 * Math.PI * k / (l * 1e-6)) / 100; }
+
+function getColor(key) {
+  for (const g of GROUPS) {
+    const idx = g.keys.indexOf(key);
+    if (idx === -1) continue;
+    if (g.colors) return g.colors[idx] || g.colors[g.colors.length - 1];
+    return g.color || '#999';
+  }
+  return '#999';
+}
+
+function num(id) { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
+
+/* Sorted copies, computed once */
+const SORTED = {};
+Object.keys(MAT).forEach(k => {
+  if (MAT[k] && MAT[k].d) SORTED[k] = [...MAT[k].d].sort((a, b) => a.l - b.l);
+});
+
+/* Generic 1-2-5 linear ticks (for α / κ on a linear axis) */
+function linTicks(vmin, vmax, target = 6) {
+  if (!(vmax > vmin)) return [vmin];
+  const raw = (vmax - vmin) / target;
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 2, 5, 10].map(m => m * mag).find(s => s >= raw) || 10 * mag;
+  const t = [];
+  for (let v = Math.ceil(vmin / step) * step; v <= vmax + step * 1e-9; v += step) t.push(+v.toPrecision(12));
+  return t;
+}
+
+/* Log ticks, thinned to at most ~8 labels when spanning many decades */
+function thinLogTicks(vmin, vmax) {
+  const t = niceLogTicks(vmin, vmax);
+  if (t.length <= 8) return t;
+  const step = Math.ceil(t.length / 7);
+  return t.filter((v, i) => i % step === 0);
+}
+
+/* ── Sidebar ── */
+const DL_ICON = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10"/></svg>';
+
+function buildSidebar() {
+  const box = document.getElementById('groups');
+  box.innerHTML = '';
+  GROUPS.forEach((g, gi) => {
+    const keys = g.keys.filter(k => SORTED[k] && SORTED[k].length);
+    if (!keys.length) return;
+    const head = document.createElement('div');
+    head.className = 'group-head';
+    head.innerHTML = `<input type="checkbox" id="g-${gi}" checked aria-label="Toggle ${g.label}"><label for="g-${gi}">${g.label}</label><button type="button" aria-label="Collapse">▾</button>`;
+    const wrap = document.createElement('div');
+    wrap.className = 'mat-wrap';
+    keys.forEach(k => {
+      state.checked[k] = true;
+      const row = document.createElement('div');
+      row.className = 'mat';
+      row.dataset.key = k;
+      const c = getColor(k);
+      row.innerHTML = `<span class="sw" style="background:${c};border-color:${c}"></span><span class="nm">${MAT[k].name}</span><button type="button" class="dl" title="Download n, k (CSV)" aria-label="Download ${MAT[k].name} data">${DL_ICON}</button>`;
+      row.addEventListener('click', e => {
+        if (e.target.closest('.dl')) { downloadMat(k); return; }
+        state.checked[k] = !state.checked[k];
+        syncChecks(); render();
+      });
+      row.addEventListener('mouseenter', () => { if (state.checked[k]) { state.focus = k; render(); } });
+      row.addEventListener('mouseleave', () => { if (state.focus) { state.focus = null; render(); } });
+      wrap.appendChild(row);
+    });
+    head.querySelector('input').addEventListener('change', e => {
+      keys.forEach(k => { state.checked[k] = e.target.checked; });
+      syncChecks(); render();
+    });
+    head.querySelector('button').addEventListener('click', e => {
+      const closed = wrap.classList.toggle('closed');
+      e.target.textContent = closed ? '▸' : '▾';
+    });
+    box.appendChild(head);
+    box.appendChild(wrap);
+  });
+}
+
+function syncChecks() {
+  document.querySelectorAll('.mat').forEach(row => row.classList.toggle('off', !state.checked[row.dataset.key]));
+  GROUPS.forEach((g, gi) => {
+    const cb = document.getElementById('g-' + gi);
+    if (!cb) return;
+    const keys = g.keys.filter(k => k in state.checked);
+    const on = keys.filter(k => state.checked[k]).length;
+    cb.checked = on === keys.length;
+    cb.indeterminate = on > 0 && on < keys.length;
+  });
+}
+
+/* ── Plot primitives ── */
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const a in attrs) n.setAttribute(a, attrs[a]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+
+function makeAxis(svg, xr, yr, xs, ys, yLabel, yTickFn) {
+  const W = svg.clientWidth || 600, H = svg.clientHeight || 420;
+  const pad = { l: 64, r: 14, t: 10, b: 44 };
+  const L = pad.l, R = W - pad.r, T = pad.t, B = H - pad.b;
+  const lg = v => Math.log10(Math.max(v, 1e-300));
+  const xmap = xs === 'log'
+    ? x => L + (R - L) * (lg(x) - lg(xr[0])) / (lg(xr[1]) - lg(xr[0]))
+    : x => L + (R - L) * (x - xr[0]) / (xr[1] - xr[0]);
+  const ymap = ys === 'log'
+    ? y => B - (B - T) * (lg(y) - lg(yr[0])) / (lg(yr[1]) - lg(yr[0]))
+    : y => B - (B - T) * (y - yr[0]) / (yr[1] - yr[0]);
+  const xinv = xs === 'log'
+    ? px => Math.pow(10, lg(xr[0]) + (px - L) / (R - L) * (lg(xr[1]) - lg(xr[0])))
+    : px => xr[0] + (px - L) / (R - L) * (xr[1] - xr[0]);
+
+  svg.innerHTML = '';
+  const defs = el('defs', {}, svg);
+  const cp = el('clipPath', { id: svg.id + '-clip' }, defs);
+  el('rect', { x: L, y: T, width: R - L, height: B - T }, cp);
+
+  const xt = xs === 'log' ? niceLogTicks(xr[0], xr[1]) : niceTicks(xr[0], xr[1], 7);
+  const yt = yTickFn(yr[0], yr[1]);
+  const grid = el('g', {}, svg);
+  yt.forEach(v => {
+    const y = ymap(v); if (y < T - 1 || y > B + 1) return;
+    el('line', { x1: L, x2: R, y1: y, y2: y, stroke: '#f0f0f0' }, grid);
+    const t = el('text', { x: L - 8, y: y + 3.5, 'text-anchor': 'end', 'font-size': 10.5, fill: '#777', 'font-family': FONT }, grid);
+    t.textContent = fmtV(v);
+  });
+  xt.forEach(v => {
+    const x = xmap(v); if (x < L - 1 || x > R + 1) return;
+    el('line', { x1: x, x2: x, y1: T, y2: B, stroke: '#f0f0f0' }, grid);
+    const t = el('text', { x, y: B + 16, 'text-anchor': 'middle', 'font-size': 10.5, fill: '#777', 'font-family': FONT }, grid);
+    t.textContent = fmtV(v);
+  });
+  el('rect', { x: L, y: T, width: R - L, height: B - T, fill: 'none', stroke: '#d6d6d6' }, svg);
+  const xl = el('text', { x: (L + R) / 2, y: H - 6, 'text-anchor': 'middle', 'font-size': 11.5, fill: '#555', 'font-family': FONT }, svg);
+  xl.textContent = 'Wavelength (μm)';
+  const yl = el('text', { transform: `rotate(-90 16 ${(T + B) / 2})`, x: 16, y: (T + B) / 2, 'text-anchor': 'middle', 'font-size': 11.5, fill: '#555', 'font-family': FONT }, svg);
+  yl.innerHTML = yLabel;
+
+  const plotG = el('g', { 'clip-path': `url(#${svg.id}-clip)` }, svg);
+  const overlay = el('g', { 'pointer-events': 'none' }, svg);
+  return { L, R, T, B, xmap, ymap, xinv, plotG, overlay, xr, yr };
+}
+
+function pathFrom(pts, ax) {
+  let d = '', pen = false;
+  for (const p of pts) {
+    if (p === null) { pen = false; continue; }
+    const x = ax.xmap(p[0]), y = ax.ymap(p[1]);
+    if (!isFinite(x) || !isFinite(y)) { pen = false; continue; }
+    d += (pen ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+    pen = true;
+  }
+  return d;
+}
+
+/* ── Render ── */
+let AX = { n: null, a: null };
+let HOVER = { n: [], a: [] };
+
+function render() {
+  const at = num('at') || 10;
+  const xr = [num('lmin') ?? 0.2, num('lmax') ?? 25];
+  if (!(xr[1] > xr[0])) return;
+  if (state.xScale === 'log' && xr[0] <= 0) xr[0] = 0.01;
+
+  const keys = GROUPS.flatMap(g => g.keys).filter(k => state.checked[k] && SORTED[k]);
+  const kOK = (m, p) => !m.show_k_lams || m.show_k_lams.has(p.l);
+  const aVal = (p) => state.aQty === 'alpha' ? aCm(p.l, p.k) : p.k;
+
+  /* Collect data for ranges */
+  let nMin = Infinity, nMax = -Infinity, aMin = Infinity, aMax = -Infinity, inWin = 0;
+  keys.forEach(k => {
+    const m = MAT[k];
+    SORTED[k].forEach(p => {
+      if (p.l < xr[0] || p.l > xr[1]) return;
+      if (p.n > 0 && aCm(p.l, p.k) < at) { nMin = Math.min(nMin, p.n); nMax = Math.max(nMax, p.n); inWin++; }
+      if (kOK(m, p)) {
+        const v = aVal(p);
+        if (state.aScale === 'log' ? v > 0 : v >= 0) { aMin = Math.min(aMin, v); aMax = Math.max(aMax, v); }
+      }
+    });
+  });
+
+  document.getElementById('n-sub').textContent = `Transparency window only (α < ${fmtV(at)} cm⁻¹)`;
+  document.getElementById('a-title').innerHTML = state.aQty === 'alpha' ? 'Absorption coefficient <i>α</i>' : 'Extinction coefficient <i>κ</i>';
+  document.getElementById('status').textContent = `${keys.length} of ${Object.keys(SORTED).length} materials shown`;
+
+  /* Left: n */
+  const svgN = document.getElementById('plot-n');
+  const emptyN = document.getElementById('empty-n');
+  if (!keys.length || !isFinite(nMin)) {
+    svgN.innerHTML = ''; AX.n = null; HOVER.n = [];
+    emptyN.textContent = keys.length ? 'No transparent region in this range' : 'No materials selected';
+    emptyN.style.display = 'flex';
+  } else {
+    emptyN.style.display = 'none';
+    const padN = (nMax - nMin) * 0.05 || 0.1;
+    const yr = [num('nmin') ?? Math.max(0.9, nMin - padN), num('nmax') ?? nMax + padN];
+    if (state.nScale === 'log' && yr[0] <= 0) yr[0] = 0.1;
+    const ax = AX.n = makeAxis(svgN, xr, yr, state.xScale, state.nScale, 'Refractive index <tspan font-style="italic">n</tspan>',
+      state.nScale === 'log' ? niceLogTicks : (a, b) => niceTicks(a, b, 6));
+    const hov = [];
+    keys.forEach(k => {
+      const pts = [], hp = [];
+      SORTED[k].forEach(p => {
+        if (p.n > 0 && aCm(p.l, p.k) < at && p.l >= xr[0] && p.l <= xr[1]) {
+          pts.push([p.l, p.n]);
+          hp.push({ p, px: ax.xmap(p.l), py: ax.ymap(p.n) });
+        } else pts.push(null);
+      });
+      const d = pathFrom(pts, ax);
+      if (!d) return;
+      const dim = state.focus && state.focus !== k;
+      el('path', { d, fill: 'none', stroke: getColor(k), 'stroke-width': state.focus === k ? 3.2 : 2.1,
+        'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: dim ? 0.12 : 1 }, ax.plotG);
+      hov.push({ k, pts: hp });
+    });
+    HOVER.n = hov;
+  }
+
+  /* Right: α or κ */
+  const svgA = document.getElementById('plot-a');
+  const emptyA = document.getElementById('empty-a');
+  if (!keys.length || !isFinite(aMin)) {
+    svgA.innerHTML = ''; AX.a = null; HOVER.a = [];
+    emptyA.textContent = keys.length ? 'No data in this range' : 'No materials selected';
+    emptyA.style.display = 'flex';
+  } else {
+    emptyA.style.display = 'none';
+    const thr = l => state.aQty === 'alpha' ? at : at * 100 * l * 1e-6 / (4 * Math.PI);
+    let yr;
+    if (state.aScale === 'log') {
+      const lo = Math.max(aMin, aMax * 1e-14);
+      yr = [Math.pow(10, Math.floor(Math.log10(Math.min(lo, thr(xr[0]))))), Math.pow(10, Math.ceil(Math.log10(Math.max(aMax, thr(xr[1])))))];
+    } else {
+      yr = [0, Math.max(aMax, thr(xr[1])) * 1.05];
+    }
+    const label = state.aQty === 'alpha' ? 'Absorption coefficient <tspan font-style="italic">α</tspan> (cm⁻¹)' : 'Extinction coefficient <tspan font-style="italic">κ</tspan>';
+    const ax = AX.a = makeAxis(svgA, xr, yr, state.xScale, state.aScale, label,
+      state.aScale === 'log' ? thinLogTicks : linTicks);
+
+    /* Threshold (shaded region below + dashed line) */
+    const tl = [];
+    for (let i = 0; i <= 120; i++) {
+      const l = state.xScale === 'log' ? xr[0] * Math.pow(xr[1] / xr[0], i / 120) : xr[0] + (xr[1] - xr[0]) * i / 120;
+      tl.push([l, thr(l)]);
+    }
+    const td = pathFrom(tl, ax);
+    const bottom = ax.B;
+    el('path', { d: td + `L${ax.R},${bottom}L${ax.L},${bottom}Z`, fill: '#1f7a3a', opacity: 0.05 }, ax.plotG);
+    el('path', { d: td, fill: 'none', stroke: '#1f7a3a', 'stroke-width': 1.3, 'stroke-dasharray': '5 4', opacity: 0.8 }, ax.plotG);
+    const tLab = el('text', { x: ax.R - 6, y: Math.max(ax.T + 12, Math.min(ax.B - 6, ax.ymap(thr(xr[1])) - 6)), 'text-anchor': 'end', 'font-size': 10.5, fill: '#1f7a3a', 'font-family': FONT }, ax.overlay);
+    tLab.textContent = `α = ${fmtV(at)} cm⁻¹`;
+
+    const hov = [];
+    keys.forEach(k => {
+      const m = MAT[k];
+      const all = [], win = [], hp = [];
+      SORTED[k].forEach(p => {
+        if (p.l < xr[0] || p.l > xr[1] || !kOK(m, p)) { all.push(null); win.push(null); return; }
+        const v = aVal(p);
+        if (state.aScale === 'log' && !(v > 0)) { all.push(null); win.push(null); return; }
+        all.push([p.l, v]);
+        win.push(aCm(p.l, p.k) < at ? [p.l, v] : null);
+        hp.push({ p, px: ax.xmap(p.l), py: ax.ymap(v) });
+      });
+      const dim = state.focus && state.focus !== k;
+      const c = getColor(k);
+      const dAll = pathFrom(all, ax);
+      if (dAll) el('path', { d: dAll, fill: 'none', stroke: c, 'stroke-width': 1.2, opacity: dim ? 0.06 : 0.35, 'stroke-linejoin': 'round' }, ax.plotG);
+      const dWin = pathFrom(win, ax);
+      if (dWin) el('path', { d: dWin, fill: 'none', stroke: c, 'stroke-width': state.focus === k ? 3.2 : 2.1, opacity: dim ? 0.12 : 1, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, ax.plotG);
+      if (hp.length) hov.push({ k, pts: hp });
+    });
+    HOVER.a = hov;
+  }
+}
+
+/* ── Linked hover ── */
+const tt = document.getElementById('tt');
+
+function nearest(which, mx, my) {
+  let best = null, bd = 18 * 18;
+  for (const s of HOVER[which]) {
+    for (const h of s.pts) {
+      const dx = h.px - mx, dy = h.py - my, d = dx * dx + dy * dy;
+      if (d < bd) { bd = d; best = { k: s.k, p: h.p }; }
+    }
+  }
+  return best;
+}
+
+function clearOverlay() {
+  ['n', 'a'].forEach(w => { if (AX[w]) AX[w].overlay.querySelectorAll('.hv').forEach(n => n.remove()); });
+  tt.style.display = 'none';
+}
+
+function mark(which, l, y, color) {
+  const ax = AX[which]; if (!ax) return;
+  const x = ax.xmap(l);
+  if (x < ax.L || x > ax.R) return;
+  el('line', { class: 'hv', x1: x, x2: x, y1: ax.T, y2: ax.B, stroke: '#999', 'stroke-dasharray': '3 3', 'stroke-width': 1 }, ax.overlay);
+  if (y === null) return;
+  const py = ax.ymap(y);
+  if (!isFinite(py) || py < ax.T || py > ax.B) return;
+  el('circle', { class: 'hv', cx: x, cy: py, r: 4.5, fill: '#fff', stroke: color, 'stroke-width': 2 }, ax.overlay);
+}
+
+function onMove(which, e) {
+  const svg = e.currentTarget, r = svg.getBoundingClientRect();
+  const hit = nearest(which, e.clientX - r.left, e.clientY - r.top);
+  clearOverlay();
+  if (!hit) return;
+  const { k, p } = hit;
+  const at = num('at') || 10;
+  const a = aCm(p.l, p.k), color = getColor(k);
+  const inWin = a < at;
+  mark('n', p.l, inWin ? p.n : null, color);
+  const kv = state.aQty === 'alpha' ? a : p.k;
+  mark('a', p.l, (state.aScale === 'log' && !(kv > 0)) ? null : kv, color);
+  tt.innerHTML = `<div class="tt-name"><i style="background:${color}"></i>${MAT[k].name}</div>
+    <div class="tt-row"><span>λ</span><b>${p.l.toFixed(3)} μm</b></div>
+    <div class="tt-row"><span>n</span><b>${p.n.toFixed(4)}</b></div>
+    <div class="tt-row"><span>κ</span><b>${p.k === 0 ? '0' : p.k.toExponential(2)}</b></div>
+    <div class="tt-row ${inWin ? 'win' : 'nowin'}"><span>α</span><b>${a === 0 ? '0' : a.toExponential(2)} cm⁻¹</b></div>`;
+  tt.style.display = 'block';
+  const w = tt.offsetWidth, h = tt.offsetHeight;
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + w > window.innerWidth - 8) x = e.clientX - w - 14;
+  if (y + h > window.innerHeight - 8) y = e.clientY - h - 14;
+  tt.style.left = x + 'px';
+  tt.style.top = y + 'px';
+}
+
+['n', 'a'].forEach(w => {
+  const svg = document.getElementById('plot-' + w);
+  let raf = 0;
+  svg.addEventListener('pointermove', e => {
+    if (raf) return;
+    const ev = { clientX: e.clientX, clientY: e.clientY, currentTarget: svg };
+    raf = requestAnimationFrame(() => { raf = 0; onMove(w, ev); });
+  });
+  svg.addEventListener('pointerdown', e => onMove(w, { clientX: e.clientX, clientY: e.clientY, currentTarget: svg }));
+  svg.addEventListener('mouseleave', clearOverlay);
+});
+
+/* ── Controls ── */
+function segment(id, key) {
+  const box = document.getElementById(id);
+  box.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state[key] = b.dataset.v;
+    box.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    render();
+  });
+}
+segment('xscale', 'xScale');
+segment('nscale', 'nScale');
+segment('ascale', 'aScale');
+segment('aqty', 'aQty');
+
+const chips = document.getElementById('at-chips');
+function syncChips() {
+  const v = num('at');
+  chips.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', +c.dataset.v === v));
+}
+chips.addEventListener('click', e => {
+  const c = e.target.closest('.chip'); if (!c) return;
+  document.getElementById('at').value = c.dataset.v;
+  syncChips(); render();
+});
+['at', 'lmin', 'lmax', 'nmin', 'nmax'].forEach(id => document.getElementById(id).addEventListener('input', () => { syncChips(); render(); }));
+
+document.getElementById('all-on').addEventListener('click', () => { Object.keys(state.checked).forEach(k => state.checked[k] = true); syncChecks(); render(); });
+document.getElementById('all-off').addEventListener('click', () => { Object.keys(state.checked).forEach(k => state.checked[k] = false); syncChecks(); render(); });
+
+const panel = document.getElementById('panel');
+document.getElementById('panel-toggle').addEventListener('click', e => {
+  const open = panel.classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded', open);
+  document.getElementById('panel-caret').textContent = open ? '▴' : '▾';
+});
+
+let rt;
+window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 80); });
+
+buildSidebar();
+syncChecks();
+render();
+  </script>
+</body>
+</html>
