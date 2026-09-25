@@ -176,6 +176,88 @@
     .news-text { color: var(--ink); }
     .news-text strong { font-weight: 600; }
 
+    /* ── EXPERIENCE ── */
+    .exp-item {
+      margin-bottom: 2rem;
+    }
+
+    .exp-item:last-child { margin-bottom: 0; }
+
+    .exp-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .exp-item h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--red);
+    }
+
+    .exp-date {
+      font-size: 0.75rem;
+      color: var(--light);
+      white-space: nowrap;
+    }
+
+    .exp-org {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-item ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      max-width: 62ch;
+    }
+
+    .exp-item li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .exp-item li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: var(--light);
+    }
+
+    .exp-subhead {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2.5rem 0 1rem;
+    }
+
+    .project-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .project-list li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      font-size: 0.875rem;
+      align-items: baseline;
+    }
+
+    .project-sponsor {
+      color: var(--light);
+      font-size: 0.8rem;
+    }
+
     /* ── RESEARCH ── */
     .research-item {
       margin-bottom: 2.5rem;
@@ -303,6 +385,7 @@
   <div class="mobile-nav" id="mobileNav">
     <a href="#about">About</a>
     <a href="#news">News</a>
+    <a href="#experience">Research Experience</a>
     <a href="#research">Research Highlights</a>
     <a href="#publications">Publications</a>
   </div>
@@ -316,6 +399,7 @@
       <nav>
         <a href="#about" class="active">About</a>
         <a href="#news">News</a>
+        <a href="#experience">Research Experience</a>
         <a href="#research">Research Highlights</a>
         <a href="#publications">Publications</a>
       </nav>
@@ -362,6 +446,75 @@
           <li>
             <span class="news-date">Jan 2026</span>
             <span class="news-text">This website launched.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- RESEARCH EXPERIENCE -->
+      <section id="experience">
+        <h2>Research Experience</h2>
+
+        <div class="exp-item">
+          <div class="exp-head">
+            <h3>Scientist I</h3>
+            <span class="exp-date">Oct 2026 – Present</span>
+          </div>
+          <p class="exp-org">University of Wisconsin–Madison · Madison, WI</p>
+          <ul>
+            <li>Optimizing adaptive thermal-regulator multilayers via genetic-algorithm inverse design.</li>
+            <li>Built an integrated optical–thermal balance model to predict solar photovoltaic (PV) efficiency under on-orbit conditions.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-head">
+            <h3>Research Associate</h3>
+            <span class="exp-date">Oct 2022 – Sep 2026</span>
+          </div>
+          <p class="exp-org">University of Wisconsin–Madison · Madison, WI</p>
+          <ul>
+            <li>Established Ar⁺ irradiation as a post-fabrication knob for tuning the vanadium dioxide (VO₂) phase transition across a 105 °C window.</li>
+            <li>Designed and fabricated VO₂-based optical coating stacks for tunable optical structures and passive radiative coolers.</li>
+            <li>Developed a high-temperature (up to 600 °C) FTIR protocol that eliminates systematic overfitting in infrared ellipsometry.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-head">
+            <h3>Research Assistant</h3>
+            <span class="exp-date">Sep 2016 – Sep 2022</span>
+          </div>
+          <p class="exp-org">Kyung Hee University · South Korea</p>
+          <ul>
+            <li>Fabricated etch-free 3D hollow microcavities by photolithography and conformal ALD.</li>
+            <li>Developed spray-coated hydrophobic antireflection coatings for solar PV cover glass, improving transmittance from 92% to 97%.</li>
+            <li>Developed and characterized high-temperature nanostructured tungsten emitters for thermophotovoltaics (TPV).</li>
+            <li>Validated PV efficiency enhancement through external quantum efficiency (EQE) analysis.</li>
+            <li>Developed flexible, heat-resistant color films based on nanometer-scale multilayer optical coatings.</li>
+          </ul>
+        </div>
+
+        <h3 class="exp-subhead">Selected Research Projects</h3>
+        <ul class="project-list">
+          <li>
+            <span>Dynamic Photonic Thermal Management for Space-based Solar Systems <span class="project-sponsor">· IARPA SOLSTICE</span></span>
+            <span class="exp-date">Present</span>
+          </li>
+          <li>
+            <span>Accelerating Discovery of Tunable Optical Materials <span class="project-sponsor">· DARPA</span></span>
+            <span class="exp-date">2023 – 2024</span>
+          </li>
+          <li>
+            <span>Thermochromic Optical Coatings for Emissivity Modulation <span class="project-sponsor">· DARPA Phase II</span></span>
+            <span class="exp-date">2022 – 2024</span>
+          </li>
+          <li>
+            <span>Metasurface Optics for AR/VR Displays <span class="project-sponsor">· Samsung Electronics</span></span>
+            <span class="exp-date">2019 – 2022</span>
+          </li>
+          <li>
+            <span>Ultrathin On-chip Radiative Coolers for Solar Photovoltaics <span class="project-sponsor">· Samsung Electronics</span></span>
+            <span class="exp-date">2017 – 2020</span>
           </li>
         </ul>
       </section>
